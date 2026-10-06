@@ -583,7 +583,7 @@ local EncodedAssets = {
 		    local RunService       = game:GetService("RunService")
 		    local GuiService       = game:GetService("GuiService")
 	
-		    local CURSOR_IMAGE = "rbxassetid://15690831135"
+		    local CURSOR_IMAGE = "rbxassetid://130019821261061"
 		
 		    local Cursor = {
 		        Enabled = false,
