@@ -1773,6 +1773,7 @@ local EncodedAssets = {
                 return
             end
 
+			UserInputService.MouseBehavior = Enum.MouseBehavior.Default
             self.Outline.Visible = true
             self.IsOpen = true
         end
@@ -1786,6 +1787,7 @@ local EncodedAssets = {
                 Menu.CurrentContent:Close()
             end
 
+			UserInputService.MouseBehavior = Enum.MouseBehavior.LockCenter
             self.Outline.Visible = false
             self.IsOpen = false
         end
