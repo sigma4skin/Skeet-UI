@@ -1767,22 +1767,12 @@ local EncodedAssets = {
             Window.PagesIndex += 1
             Window.Pages[Window.PagesIndex] = Page
         end
-
-		local ModalButton = Instance.new("TextButton")
-		ModalButton.BackgroundTransparency = 1
-		ModalButton.Text = ""
-		ModalButton.Size = UDim2.new(0, 0, 0, 0)
-		ModalButton.Visible = true
-		ModalButton.Modal = false
-		ModalButton.Parent = Menu.ScreenGui
 		
         function Window:Open()
             if self.IsOpen then
                 return
             end
 
-			ModalButton.Modal = true
-    		UserInputService.MouseIconEnabled = true
             self.Outline.Visible = true
             self.IsOpen = true
         end
