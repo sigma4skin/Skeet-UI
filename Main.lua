@@ -1597,24 +1597,39 @@ local EncodedAssets = {
                     -- Dragging
                     do
                         local Dragging = false
-                        local DragConnection
+                        local DragConnection = nil
                         local OriginalSide = Section.Side
 
-                        Section.TitleBackground.MouseButton1Down:Connect(function()
+                        Section.TitleBackground.InputBegan:Connect(function(Input)
+                            if Input.UserInputType ~= Enum.UserInputType.MouseButton1 then return end
+                            
                             Dragging = true
+                            
+                            -- Clean up existing connection if any
+                            if DragConnection then
+                                DragConnection:Disconnect()
+                                DragConnection = nil
+                            end
+
+                            local MousePos = UserInputService:GetMouseLocation()
                             local ParentAbsolutePosition = Page.ContentHolder.AbsolutePosition
-                            local Offset = NewVector2(Mouse.X, Mouse.Y) - Section.Outline.AbsolutePosition
+                            local Offset = MousePos - Section.Outline.AbsolutePosition
 
                             Section.Outline.BorderColor3 = Theme["Accent"]
 
                             DragConnection = RenderStepped:Connect(function()
                                 if not Dragging then return end
 
-                                local NewPosition = NewVector2(Mouse.X, Mouse.Y) - Offset
-                                Section.Outline.Position = NewUDim2(0, NewPosition.X - ParentAbsolutePosition.X, 0, NewPosition.Y - ParentAbsolutePosition.Y)
+                                local CurrentMouse = UserInputService:GetMouseLocation()
+                                local NewPosition = CurrentMouse - Offset
+                                
+                                Section.Outline.Position = NewUDim2(
+                                    0, NewPosition.X - ParentAbsolutePosition.X, 
+                                    0, NewPosition.Y - ParentAbsolutePosition.Y
+                                )
 
                                 local SnapList = SectionsContainer[Section.Side]
-                                local NewSide = (Mouse.X < ParentAbsolutePosition.X + Page.ContentHolder.AbsoluteSize.X / 2) and 1 or 2
+                                local NewSide = (CurrentMouse.X < ParentAbsolutePosition.X + Page.ContentHolder.AbsoluteSize.X / 2) and 1 or 2
 
                                 if NewSide ~= Section.Side then
                                     for i = 1, #SnapList do
@@ -1650,6 +1665,7 @@ local EncodedAssets = {
 
                         UserInputService.InputEnded:Connect(function(Input)
                             if Input.UserInputType ~= Enum.UserInputType.MouseButton1 or not Dragging then return end
+                            
                             Dragging = false
 
                             if DragConnection then
