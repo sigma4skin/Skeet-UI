@@ -583,7 +583,7 @@ local EncodedAssets = {
 		    local RunService       = game:GetService("RunService")
 		    local GuiService       = game:GetService("GuiService")
 	
-		    local CURSOR_IMAGE = "rbxassetid://6034825595"
+		    local CURSOR_IMAGE = "rbxassetid://15690831135"
 		
 		    local Cursor = {
 		        Enabled = false,
@@ -1725,7 +1725,7 @@ local EncodedAssets = {
                                 DragConnection = nil
                             end
 
-                            local MousePos = UserInputService:GetMouseLocation()
+                            local MousePos = Menu:GetCursorPosition()
                             local ParentAbsolutePosition = Page.ContentHolder.AbsolutePosition
                             local Offset = MousePos - Section.Outline.AbsolutePosition
 
@@ -1734,7 +1734,7 @@ local EncodedAssets = {
                             DragConnection = RenderStepped:Connect(function()
                                 if not Dragging then return end
 
-                                local CurrentMouse = UserInputService:GetMouseLocation()
+                                local CurrentMouse = Menu:GetCursorPosition()
                                 local NewPosition = CurrentMouse - Offset
                                 
                                 Section.Outline.Position = NewUDim2(
