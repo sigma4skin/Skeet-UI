@@ -4560,7 +4560,7 @@ function Library:KeybindList()
     end)
 end
 
-function Library.ToggleUI = ToggleUI
+Library.ToggleUI = ToggleUI
 local function CreateTabObj(frame) return setmetatable({ ContentFrame = frame }, TabFunctions) end
 Library.Tabs.Rage = CreateTabObj(ragecontentframe)
 Library.Tabs.AA = CreateTabObj(aacontentframe)
