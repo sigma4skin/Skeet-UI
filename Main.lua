@@ -570,6 +570,120 @@ local EncodedAssets = {
 
             return Render
         end
+
+		function Menu:GetCursorPosition()
+		    if Menu.Cursor and Menu.Cursor.Enabled then
+		        return Menu.Cursor.Position
+		    end
+		    return UserInputService:GetMouseLocation()
+		end
+		
+		do --// Custom Accent Cursor
+		    local UserInputService = game:GetService("UserInputService")
+		    local RunService       = game:GetService("RunService")
+		    local GuiService       = game:GetService("GuiService")
+	
+		    local CURSOR_IMAGE = "rbxassetid://6034825595"
+		
+		    local Cursor = {
+		        Enabled = false,
+		        Position = Vector2.zero,
+		        Size = 18,
+		    }
+		
+		    Cursor.Gui = Draw:ScreenGui({
+		        Name = "AccentCursor",
+		        DisplayOrder = 999999,
+		        IgnoreGuiInset = true,
+		        Parent = (gethui and gethui()) or game:GetService("CoreGui") or game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"),
+		    })
+		
+		    Cursor.Arrow = Draw:ImageLabel({
+		        Name = "Arrow",
+		        Parent = Cursor.Gui,
+		        BackgroundTransparency = 1,
+		        BorderSizePixel = 0,
+		        Image = CURSOR_IMAGE,
+		        ImageColor3 = Menu.Theme["Accent"],
+		        Size = UDim2.fromOffset(Cursor.Size, Cursor.Size),
+		        Position = UDim2.fromOffset(0, 0),
+		        ZIndex = 100000,
+		        Visible = false,
+		        Active = false,
+		        ResampleMode = Enum.ResamplerMode.Pixelated,
+		    })
+		
+		    Cursor.Outline = Draw:ImageLabel({
+		        Name = "Outline",
+		        Parent = Cursor.Arrow,
+		        BackgroundTransparency = 1,
+		        BorderSizePixel = 0,
+		        Image = CURSOR_IMAGE,
+		        ImageColor3 = Color3.new(0, 0, 0),
+		        ImageTransparency = 0.35,
+		        Size = UDim2.new(1, 2, 1, 2),
+		        Position = UDim2.fromOffset(-1, -1),
+		        ZIndex = Cursor.Arrow.ZIndex - 1,
+		        ResampleMode = Enum.ResamplerMode.Pixelated,
+		    })
+		
+		    function Cursor:SetAccent(Color)
+		        if typeof(Color) == "Color3" then
+		            self.Arrow.ImageColor3 = Color
+		        end
+		    end
+		
+		    function Cursor:Show()
+		        self.Enabled = true
+		        self.Arrow.Visible = true
+		        local pos = UserInputService:GetMouseLocation()
+		        self.Position = Vector2.new(pos.X, pos.Y)
+		        self.Arrow.Position = UDim2.fromOffset(self.Position.X, self.Position.Y)
+		
+		        UserInputService.MouseIconEnabled = false
+		    end
+		
+		    function Cursor:Hide()
+		        self.Enabled = false
+		        self.Arrow.Visible = false
+		    end
+		
+		    function Cursor:MoveTo(x, y)
+		        local cam = workspace.CurrentCamera
+		        local viewport = cam and cam.ViewportSize or Vector2.new(1920, 1080)
+		
+		        self.Position = Vector2.new(
+		            math.clamp(x, 0, viewport.X),
+		            math.clamp(y, 0, viewport.Y)
+		        )
+		        self.Arrow.Position = UDim2.fromOffset(self.Position.X, self.Position.Y)
+		    end
+		
+		    UserInputService.InputChanged:Connect(function(Input)
+		        if not Cursor.Enabled then return end
+		        if Input.UserInputType ~= Enum.UserInputType.MouseMovement then return end
+		
+		        if UserInputService.MouseBehavior == Enum.MouseBehavior.Default then
+		            local pos = UserInputService:GetMouseLocation()
+		            Cursor:MoveTo(pos.X, pos.Y)
+		        else
+		            Cursor:MoveTo(Cursor.Position.X + Input.Delta.X, Cursor.Position.Y + Input.Delta.Y)
+		        end
+		    end)
+		
+		    RunService.RenderStepped:Connect(function()
+		        if not Cursor.Enabled then return end
+		
+		        Cursor:SetAccent(Menu.Theme["Accent"])
+		        UserInputService.MouseIconEnabled = false
+		
+		        pcall(function()
+		            UserInputService.MouseBehavior = Enum.MouseBehavior.Default
+		        end)
+		    end)
+		
+		    Menu.Cursor = Cursor
+		end
 	end
 
 
@@ -1775,6 +1889,10 @@ local EncodedAssets = {
 
             self.Outline.Visible = true
             self.IsOpen = true
+
+		    if Menu.Cursor then
+		        Menu.Cursor:Show()
+		    end
         end
 
         function Window:Close()
@@ -1788,6 +1906,10 @@ local EncodedAssets = {
 
             self.Outline.Visible = false
             self.IsOpen = false
+
+		    if Menu.Cursor then
+		        Menu.Cursor:Hide()
+		    end
         end
     end
 
