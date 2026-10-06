@@ -4559,4 +4559,15 @@ function Library:KeybindList()
         Main.Visible = hasBinds
     end)
 end
+
+local function CreateTabObj(frame) return setmetatable({ ContentFrame = frame }, TabFunctions) end
+Library.Tabs.Rage = CreateTabObj(ragecontentframe)
+Library.Tabs.AA = CreateTabObj(aacontentframe)
+Library.Tabs.Legit = CreateTabObj(legitcontentframe)
+Library.Tabs.Visuals = CreateTabObj(visualcontentframe)
+Library.Tabs.Settings = CreateTabObj(settingscontentframe)
+Library.Tabs.Skins = CreateTabObj(skincontentframe)
+Library.Tabs.User = CreateTabObj(usercontentframe)
+Library.Tabs.Extra = CreateTabObj(extracontentframe)
+
 return Library
