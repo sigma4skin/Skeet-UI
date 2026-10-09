@@ -7095,8 +7095,8 @@ do -- Library
         end
         --
         function Library:Unload()
-			if Client.Character and Client.Character:FindFirstChild("Humanoid") then
-            	Camera.CameraSubject = Client.Character.Humanoid
+			if Client.Character and Client.Character:FindFirstChild("HumanoidRootPart") then
+            	Camera.CameraSubject = Client.Character.HumanoidRootPart
 			end
             --
             for Index, Value in Library.Connections do
