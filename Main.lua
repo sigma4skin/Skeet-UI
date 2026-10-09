@@ -7119,9 +7119,4 @@ do -- Library
         return setmetatable(Window, Library)
     end
 end
-if Library then
-	print("hi 1")
-else
-	print("hi 2")
-end
 return Library
