@@ -48,7 +48,7 @@ do -- Library
         ConfigFolder = "gamesense/Configs",
         UI = {
             Name = "gamesense",
-            CloseBind = Enum.KeyCode.Insert,
+            CloseBind = Enum.KeyCode.RightShift,
             SectionResizeIncrements = 1,
             WatermarkRefreshRate = 1,
             MainUI = nil,
@@ -4777,7 +4777,7 @@ do -- Library
             Size = UDim2.new(0, 700, 0, 612),
             MinResize = UDim2.new(0, 500, 0, 400),
             MaxResize = UDim2.new(0, 10000, 0, 10000),
-            CloseBind = Enum.KeyCode.Insert,
+            CloseBind = Enum.KeyCode.RightShift,
         }, Options or {})
         --
         local Window = {
