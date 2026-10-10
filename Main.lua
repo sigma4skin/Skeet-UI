@@ -2119,27 +2119,42 @@ do -- Library
                 end)
             end)
             --
-            Library:Connection(UserInputService.InputBegan, function(Input, Proccessed)
-                if Proccessed then return end
-                --
-                if (Input.UserInputType == Enum.UserInputType.Keyboard and Keybind.Keybind ~= "[-]" and Input.KeyCode == Keybind.RegKeybind) or (Input.UserInputType == Enum.UserInputType.MouseButton1 and Keybind.Keybind == "MB1") or (Input.UserInputType == Enum.UserInputType.MouseButton2 and Keybind.Keybind == "MB2") or (Input.UserInputType == Enum.UserInputType.MouseButton3 and Keybind.Keybind == "MMB") then
-                    if Keybind.Mode == "Always on" then
-                        Keybind:Toggle(true)
-                    else
-                        Keybind:Toggle()
-                    end
-                end
-            end)
+			Library:Connection(UserInputService.InputBegan, function(Input, Proccessed)
+			    -- Ignore gameProcessed only if the user is typing in a TextBox
+			    if Proccessed and Input.UserInputType == Enum.UserInputType.Keyboard then 
+			        return 
+			    end
+			
+			    if (Input.UserInputType == Enum.UserInputType.Keyboard and Keybind.Keybind ~= "[-]" and Input.KeyCode == Keybind.RegKeybind) 
+			    or (Input.UserInputType == Enum.UserInputType.MouseButton1 and Keybind.Keybind == "MB1") 
+			    or (Input.UserInputType == Enum.UserInputType.MouseButton2 and Keybind.Keybind == "MB2") 
+			    or (Input.UserInputType == Enum.UserInputType.MouseButton3 and Keybind.Keybind == "MMB") then
+			        
+			        if Keybind.Mode == "Hold" then
+			            Keybind:Toggle(true)
+			        elseif Keybind.Mode == "Always on" then
+			            Keybind:Toggle(true)
+			        else
+			            Keybind:Toggle()
+			        end
+			    end
+			end)
             --
             Library:Connection(UserInputService.InputEnded, function(Input, Proccessed)
-                if Proccessed then return end
-                --
-                if Keybind.Mode == "On hotkey" then
-                    if (Input.UserInputType == Enum.UserInputType.Keyboard and Keybind.Keybind ~= "[-]" and Input.KeyCode == Keybind.RegKeybind) or (Input.UserInputType == Enum.UserInputType.MouseButton1 and Keybind.Keybind == "MB1") or (Input.UserInputType == Enum.UserInputType.MouseButton2 and Keybind.Keybind == "MB2") or (Input.UserInputType == Enum.UserInputType.MouseButton3 and Keybind.Keybind == "MMB") then
-                        Keybind:Toggle()
-                    end
-                end
-            end)
+				if Proccessed then return end
+					
+			    if (Input.UserInputType == Enum.UserInputType.Keyboard and Keybind.Keybind ~= "[-]" and Input.KeyCode == Keybind.RegKeybind) 
+			    or (Input.UserInputType == Enum.UserInputType.MouseButton1 and Keybind.Keybind == "MB1") 
+			    or (Input.UserInputType == Enum.UserInputType.MouseButton2 and Keybind.Keybind == "MB2") 
+			    or (Input.UserInputType == Enum.UserInputType.MouseButton3 and Keybind.Keybind == "MMB") then
+			        
+			        if Keybind.Mode == "On hotkey" then
+				        if (Input.UserInputType == Enum.UserInputType.Keyboard and Keybind.Keybind ~= "[-]" and Input.KeyCode == Keybind.RegKeybind) or (Input.UserInputType == Enum.UserInputType.MouseButton1 and Keybind.Keybind == "MB1") or (Input.UserInputType == Enum.UserInputType.MouseButton2 and Keybind.Keybind == "MB2") or (Input.UserInputType == Enum.UserInputType.MouseButton3 and Keybind.Keybind == "MMB") then
+	                        Keybind:Toggle()
+	                    end
+			        end
+			    end
+			end)
         end
         --
         if Options.Hiding then
