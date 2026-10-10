@@ -1738,31 +1738,40 @@ do -- Library
                 KeybindObject.Size = UDim2.new(0, KeybindObject.TextBounds.X + 2, 0, 7)
             end
             --
-            function Keybind:Toggle(Bool)
-                if Keybind.Hiding then return end
-                --
-                if Options.Toggle.State then
-                    if Bool == nil then
-                        Keybind.State = not Keybind.State
-                    else
-                        Keybind.State = Bool
-                    end
-                    --
-                    if not Options.HideFromList then
-                        if Keybind.State then
-                            --Library:AddKeybindFrame(Keybind.Mode, Options.Toggle:GetName(), Keybind.Keybind, Options.Toggle:GetSection())
-                        else
-                            --Library:RemoveKeybindFrame(Options.Toggle:GetName(), Options.Toggle:GetSection())
-                        end
-                    end
-                    --
-                    if Options.Toggle.GetFlag then
-                        Library.Flags[Options.Toggle:GetFlag()] = Keybind
-                    end
-                    --
-                    Options.Toggle:GetCallback(Keybind.State)
-                end
-            end
+			function Keybind:Toggle(Bool)
+			    if Keybind.Hiding then return end
+			
+			    -- 1. Always update the keybind's internal state
+			    if Bool == nil then
+			        Keybind.State = not Keybind.State
+			    else
+			        Keybind.State = Bool
+			    end
+			
+			    -- 2. Update UI Keybind List if applicable
+			    if not Options.HideFromList then
+			        if Keybind.State then
+			            --Library:AddKeybindFrame(Keybind.Mode, Options.Toggle and Options.Toggle:GetName() or "Keybind", Keybind.Keybind, Options.Toggle and Options.Toggle:GetSection() or "")
+			        else
+			            --Library:RemoveKeybindFrame(Options.Toggle and Options.Toggle:GetName() or "Keybind", Options.Toggle and Options.Toggle:GetSection() or "")
+			        end
+			    end
+			
+			    -- 3. If tied to a toggle, run the toggle callback
+			    if Options.Toggle and Options.Toggle.State then
+			        if Options.Toggle.GetFlag then
+			            Library.Flags[Options.Toggle:GetFlag()] = Keybind
+			        end
+			        if Options.Toggle.GetCallback then
+			            Options.Toggle:GetCallback(Keybind.State)
+			        end
+			    end
+			
+			    -- 4. If the keybind itself has a callback, run it
+			    if Keybind.Callback then
+			        Keybind.Callback(Keybind.State)
+			    end
+			end
             --
             task.delay(1, function()
                 Keybind:Set(Options.Default)
