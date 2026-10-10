@@ -2135,9 +2135,9 @@ do -- Library
 			    end
 			
 			    if (Input.UserInputType == Enum.UserInputType.Keyboard and Keybind.Keybind ~= "[-]" and Input.KeyCode == Keybind.RegKeybind)
-			    or (Input.UserInputType == Enum.UserInputType.MouseButton1 and Keybind.Keybind == "MB1")
-			    or (Input.UserInputType == Enum.UserInputType.MouseButton2 and Keybind.Keybind == "MB2")
-			    or (Input.UserInputType == Enum.UserInputType.MouseButton3 and Keybind.Keybind == "MMB") then
+			    or (Input.UserInputType == Enum.UserInputType.MouseButton1 and Keybind.Keybind == "M1")
+			    or (Input.UserInputType == Enum.UserInputType.MouseButton2 and Keybind.Keybind == "M2")
+			    or (Input.UserInputType == Enum.UserInputType.MouseButton3 and Keybind.Keybind == "M3") then
 			
 			        if Keybind.Mode == "On hotkey" then
 			            Keybind:Toggle(true)
@@ -2153,9 +2153,9 @@ do -- Library
 			    if Processed then return end
 			
 			    if (Input.UserInputType == Enum.UserInputType.Keyboard and Keybind.Keybind ~= "[-]" and Input.KeyCode == Keybind.RegKeybind)
-			    or (Input.UserInputType == Enum.UserInputType.MouseButton1 and Keybind.Keybind == "MB1")
-			    or (Input.UserInputType == Enum.UserInputType.MouseButton2 and Keybind.Keybind == "MB2")
-			    or (Input.UserInputType == Enum.UserInputType.MouseButton3 and Keybind.Keybind == "MMB") then
+			    or (Input.UserInputType == Enum.UserInputType.MouseButton1 and Keybind.Keybind == "M1")
+			    or (Input.UserInputType == Enum.UserInputType.MouseButton2 and Keybind.Keybind == "M2")
+			    or (Input.UserInputType == Enum.UserInputType.MouseButton3 and Keybind.Keybind == "M3") then
 			
 			        if Keybind.Mode == "On hotkey" then
 			            Keybind:Toggle(false)
