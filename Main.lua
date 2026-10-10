@@ -2129,7 +2129,6 @@ do -- Library
             end)
             --
 			Library:Connection(UserInputService.InputBegan, function(Input, Proccessed)
-			    -- Ignore gameProcessed only if the user is typing in a TextBox
 			    if Proccessed and Input.UserInputType == Enum.UserInputType.Keyboard then 
 			        return 
 			    end
@@ -2139,7 +2138,7 @@ do -- Library
 			    or (Input.UserInputType == Enum.UserInputType.MouseButton2 and Keybind.Keybind == "MB2") 
 			    or (Input.UserInputType == Enum.UserInputType.MouseButton3 and Keybind.Keybind == "MMB") then
 			        
-			        if Keybind.Mode == "Hold" then
+			        if Keybind.Mode == "On hotkey" then
 			            Keybind:Toggle(true)
 			        elseif Keybind.Mode == "Always on" then
 			            Keybind:Toggle(true)
