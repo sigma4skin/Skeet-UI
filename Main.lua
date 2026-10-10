@@ -1784,7 +1784,7 @@ do -- Library
             end
             --
             function Keybind:Active()
-                return (Keybind.Keybind:lower() == "[-]" and true or Keybind.State)
+                return (self.Keybind:lower() == "[-]" and true or self.State)
             end
             --
             if Options.Mode == "Always on" then
